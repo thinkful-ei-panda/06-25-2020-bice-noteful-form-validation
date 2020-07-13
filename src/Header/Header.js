@@ -6,6 +6,13 @@ import './Header.css'
 
 export default class Header extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+          hasError: true
+        };
+      }
+
     render () {
 
         return (

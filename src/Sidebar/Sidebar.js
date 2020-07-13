@@ -4,10 +4,19 @@ import Context from '../Context/Context'
 
 import { Link } from 'react-router-dom'
 
+//import PropTypes from 'prop-types';
+
 import './Sidebar.css'
 
 export default class Sidebar extends React.Component {
 	
+	constructor(props) {
+        super(props);
+        this.state = {
+          hasError: true
+        };
+	  }
+	  
 	static contextType = Context;
 
 	activeFolderClass ( currentFolder ) {
@@ -39,7 +48,7 @@ export default class Sidebar extends React.Component {
 	}
 
 	render () {
-		//console.log ( this.context.folders )
+		
 		return (
 			
 			<nav id = 'sidebar-nav' aria-label = 'sidebar-folder-navigation' role = 'navigation'>

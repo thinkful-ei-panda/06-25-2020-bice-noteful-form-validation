@@ -1,25 +1,17 @@
 import React from 'react'
-
 import { Route, Switch } from 'react-router-dom'
-
 import { CONFIG } from './config'
-
 import Context from './Context/Context'
-
 import Header from './Header/Header'
-
 import Sidebar from './Sidebar/Sidebar'
-
 import NoteList from './NoteList/NoteList'
-
 import AddNote from './AddNote/AddNote'
-
 import AddFolder from './AddFolder/AddFolder'
-
 import ErrorPage from './ErrorPage/ErrorPage'
-
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
-
+import ErrorBoundaryApp from './ErrorBoundaryApp/ErrorBoundaryApp'
+import ErrorBoundaryHeader from './ErrorBoundaryHeader/ErrorBoundaryHeader'
+import ErrorBoundarySideBar from './ErrorBoundarySideBar/ErrorBoundarySideBar'
+import ErrorBoundaryContent from './ErrorBoundaryContent/ErrorBoundaryContent'
 import './App.css'
 
 export default class App extends React.Component {
@@ -31,12 +23,6 @@ export default class App extends React.Component {
 		error: null
 	}
 
-	static getDerivedStateFromError ( error ) {
-	
-		return { hasError: true }
-	
-	}
-	
 	componentDidMount () {
 		
 		Object.keys ( CONFIG ).forEach ( item => {
@@ -113,27 +99,27 @@ export default class App extends React.Component {
 
 			<Context.Provider value = { contextValue }>
 
+				<ErrorBoundaryApp>
 				<div className = 'app'>
 					
-					<ErrorBoundary>
+					<ErrorBoundaryHeader>
 					
 						<Header key = 'Header' />
 					
-					</ErrorBoundary>
+					</ErrorBoundaryHeader>
 					
 					<div id = 'flex-wrapper'>
 					
-						<ErrorBoundary>
+						<ErrorBoundarySideBar>
 							
 							<Route key = 'sideBarRoute' path = '/' render = { ( routerProps ) => ( <Sidebar key = 'Sidebar' routerProps = { routerProps } /> ) } />
 						
-						</ErrorBoundary>
+						</ErrorBoundarySideBar>
 
+						<ErrorBoundaryContent>
 						<main>
 								
 							<Switch>
-	
-								<ErrorBoundary>
 	
 									<Route key = 'homePage' exact path = '/' render = { ( routerProps ) => ( <NoteList key = 'NoteList' routerProps = { routerProps } /> ) } />
 
@@ -145,17 +131,16 @@ export default class App extends React.Component {
 
 									<Route key = 'addFolder' exact path = '/add-folder' render = { ( routerProps ) => ( <AddFolder key = 'AddFolder' routerProps = { routerProps } /> ) } />
 
-								</ErrorBoundary>
-
 								<Route key = 'error' component = { ErrorPage } />
 							
 							</Switch>
 						
 						</main>
-
+						</ErrorBoundaryContent>
 					</div>
 
 				</div>
+				</ErrorBoundaryApp>
 
 			</Context.Provider>
 		
